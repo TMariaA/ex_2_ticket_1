@@ -1,6 +1,7 @@
 <?
 IncludeModuleLangFile(__FILE__);
 AddEventHandler("main", "OnBeforeEventAdd", array("exam51", "ex2_51"));
+//ex2_51
 class exam51
 {
     function ex2_51(&$event, &$lid, &$arFields)
@@ -26,12 +27,7 @@ class exam51
                 'ITEM_ID'=> $event,
                 'DESCRIPTION' => GetMessage("ex_51_REPLACEMENT").'-'.$arFields["AUTHOR"],
             ));
-//            echo '<pre>'; print_r($event); echo '</pre>';
-//            echo '<pre>'; print_r($lid); echo '</pre>';
-//            echo '<pre>'; print_r($arFields); echo '</pre>';
         }
-
-//        die();
     }
 }
 ?>
