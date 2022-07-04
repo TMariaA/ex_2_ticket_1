@@ -1,9 +1,7 @@
 <?
-
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
     die();
 }
-
 use Bitrix\Main\Loader,
     Bitrix\Iblock;
 
@@ -11,19 +9,18 @@ if (!Loader::includeModule("iblock")) {
     ShowError(GetMessage("SIMPLECOMP_EXAM2_IBLOCK_MODULE_NONE"));
     return;
 }
-//******my code******
-//echo '<pre>'; print_r($arParams); echo '</pre>';
-
+//******ex2-70******
+// кэш по умолчанию
 if (!isset($arParams["CACHE_TIME"])) {
     $arParams["CACHE_TIME"] = 36000000;
 }
-
+//кэшируем
 if ($this->startResultCache()) {
     $arNewsId = array();
     $arNews = array();
     $arSectionsId = array();
     $arSections = array();
-    //новости
+    //получаем элементы новостей
     $obNews = CIBlockElement::GetList(
         array(),
         array(
@@ -39,8 +36,7 @@ if ($this->startResultCache()) {
         $arNews[$newsElements["ID"]] = $newsElements;
     }
 
-//    echo '<pre>'; print_r($arNewsId); echo '</pre>';
-//список активных разделов с привязкой к активным новостям
+//получаем список активных разделов с привязкой к активным новостям плюс количество элементов в разделах "CNT_ACTIVE" =>"Y"  blncCnt:true,
     $obSection = CIBlockSection::GetList(
         array(),
         array(
@@ -82,15 +78,9 @@ if ($this->startResultCache()) {
             $arNews[$newsId]["PRODUCTS"][] = $arProduct;
         }
     }
-    //    echo '<pre>';
-//    print_r($arNews);
-//    echo '</pre>';
 
     //распределение разделов по новостям и подсчет количества
     $arResult["PRODUCT_CNT"] = 0;
-//        echo '<pre>';
-//    print_r($arSections);
-//    echo '</pre>';
     foreach ($arSections as $arSection) {
         $arResult["PRODUCT_CNT"] += $arSection["ELEMENT_CNT"];
         foreach ($arSection[$arParams["PROPERTY_IBLOCK_ID"]] as $newId) {
@@ -105,7 +95,8 @@ $arResult["NEWS"] = $arNews;
 }
 $APPLICATION->SetTitle($arResult["PRODUCT_CNT"]);
 
-//******my code******
+//******ex2-70******
+//ниже код от архива битрикса с шаблоном примерного решения задания(наверное)
 //if(intval($arParams["PRODUCTS_IBLOCK_ID"]) > 0)
 //{
 //
